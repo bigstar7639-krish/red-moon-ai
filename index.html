@@ -1,81 +1,113 @@
-// FIXED - No more \n\n bug
-function addMsg(txt,isUser,img,extra){
-let ch=document.getElementById('chat'); ch.classList.remove('hidden'); 
-let hero=document.getElementById('hero'); if(hero) hero.classList.add('hidden'); 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>RED MOON AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="theme-color" content="#040405">
+<style>
+*{font-family:Inter,system-ui; -webkit-tap-highlight-color:transparent}
+body{background:#040405}
+#pc{position:fixed; inset:0; pointer-events:none; z-index:0}
+.moon{width:210px; height:210px; border-radius:50%; background:radial-gradient(60% 60% at 30% 25%, #ffcccc, #ef4444 22%, #7f1d1d 58%, #000 86%); box-shadow:0 0 80px rgba(239,68,68,.5), inset -30px -25px 60px rgba(0,0,0,.9); animation:breath 4s ease-in-out infinite}
+@keyframes breath{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.eclipse{position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle at 0% 50%, transparent 38%, #000 74%); mix-blend-mode:multiply; opacity:0; animation:ecl 15s ease-in-out infinite}
+@keyframes ecl{0%,12%{transform:translateX(-135%); opacity:0}32%{transform:translateX(-18%); opacity:.93}58%{transform:translateX(28%); opacity:.93}78%,100%{transform:translateX(135%); opacity:0}}
+.halo{position:absolute; inset:-50%; background:radial-gradient(circle, rgba(239,68,68,.28) 0%, transparent 62%); animation:breath 4s ease-in-out infinite reverse; pointer-events:none}
+.scroll::-webkit-scrollbar{display:none}
+</style>
+</head>
+<body class="h-[100dvh] w-screen flex flex-col text-white overflow-hidden">
+<canvas id="pc"></canvas>
+<div class="relative z-10 flex flex-col h-full">
+<div class="mx-3 mt-3 h-[56px] rounded-[18px] bg-white/[.07] backdrop-blur-2xl border border-white/10 flex items-center justify-between px-4 shrink-0">
+<div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gradient-to-br from-red-200 to-red-900 flex items-center justify-center">🌕</div><div><div class="font-bold text-[15px]">Red Moon AI</div><div class="text-[11px] text-white/50 font-mono flex items-center gap-1.5"><span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>EVERYTHING • <span id="timer">00:12:01</span></div></div></div>
+<div class="flex gap-2"><button onclick="navigator.clipboard.writeText(location.href)" class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center"><i class="fa-solid fa-share-nodes text-[13px]"></i></button></div>
+</div>
+<div class="flex-1 overflow-auto scroll px-4 pt-6 pb-3 flex flex-col items-center">
+<div id="hero" class="flex flex-col items-center">
+<div class="relative"><div class="halo"></div><div class="moon" id="moon"><div class="eclipse"></div></div></div>
+<div class="mt-6 text-center"><div class="text-[22px] font-bold">What can I help with?</div><div class="text-[13px] text-white/50 mt-1">Chat, Image, Code - Everything</div></div>
+<div class="w-full max-w-[440px] mt-6 grid grid-cols-3 gap-2.5">
+<button onclick="ask('Generate art of red moon city cyberpunk')" class="rounded-[16px] bg-white/[.06] border border-white/10 p-4 flex flex-col items-center gap-2 active:scale-[.96]"><span class="text-[22px]">🎨</span><span class="text-[11px]">Image</span></button>
+<button onclick="ask('Create video prompt')" class="rounded-[16px] bg-white/[.06] border border-white/10 p-4 flex flex-col items-center gap-2 active:scale-[.96]"><span class="text-[22px]">🎬</span><span class="text-[11px]">Video</span></button>
+<button onclick="ask('Write code for landing page')" class="rounded-[16px] bg-white/[.06] border border-white/10 p-4 flex flex-col items-center gap-2 active:scale-[.96]"><span class="text-[22px]">💻</span><span class="text-[11px]">Code</span></button>
+</div>
+</div>
+<div id="recentWrap" class="w-full max-w-[440px] mt-5 rounded-[22px] bg-[#121214]/90 border border-white/10 p-4">
+<div class="font-semibold">Recent</div>
+<div id="recent" class="grid grid-cols-2 gap-2.5 mt-3">
+<div class="rounded-[14px] overflow-hidden bg-black border border-white/10"><div class="aspect-[16/10] bg-gradient-to-br from-red-900/60 to-black"></div><div class="p-2 text-[11px] text-white/60">Neon City • 2h ago</div></div>
+<div class="rounded-[14px] overflow-hidden bg-black border border-white/10"><div class="aspect-[16/10] flex items-center justify-center text-[24px] bg-gradient-to-br from-red-900/30 to-black">🌕</div><div class="p-2 text-[11px] text-white/60">Portrait • 5h ago</div></div>
+</div>
+</div>
+<div id="chat" class="w-full max-w-[440px] mt-5 space-y-3 hidden"></div>
+</div>
+<div class="shrink-0 p-3 pb-[max(14px,env(safe-area-inset-bottom))] bg-gradient-to-t from-black via-black/90 to-transparent">
+<div class="max-w-[440px] mx-auto rounded-full bg-[#1e1e21]/95 backdrop-blur-2xl border border-red-500/25 flex items-center gap-2 px-3 py-2.5 shadow-[0_0_40px_rgba(239,68,68,.22)]">
+<input id="inp" placeholder="Ask anything..." class="flex-1 bg-transparent outline-none text-[15px] placeholder:text-white/30 px-2">
+<button id="mic" onpointerdown="holdStart()" onpointerup="holdEnd()" class="w-9 h-9 rounded-full flex items-center justify-center text-white/50"><i class="fa-solid fa-microphone"></i></button>
+<button onclick="send()" class="w-[46px] h-[46px] rounded-full bg-gradient-to-br from-red-500 to-red-700 text-white flex items-center justify-center shadow-[0_0_26px_rgba(239,68,68,.65)] active:scale-[.86] transition"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+</div>
+</div>
+<script>
+let t=721; setInterval(()=>{t--; let m=Math.floor(t/60), s=t%60; let el=document.getElementById('timer'); if(el) el.textContent=`00:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; if(t<=0) t=900},1000);
+const c=document.getElementById('pc'), ctx=c.getContext('2d'); function rs(){c.width=innerWidth; c.height=innerHeight} rs(); addEventListener('resize',rs);
+let ps=[...Array(80)].map(()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,s:Math.random()*1.5+.3,o:Math.random()*.6+.2}));
+(function loop(){ctx.clearRect(0,0,c.width,c.height); ps.forEach(p=>{p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>c.width) p.vx*=-1; if(p.y<0||p.y>c.height) p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,p.s,0,6.283); ctx.fillStyle=`rgba(239,68,68,${p.o})`; ctx.shadowColor='#ef4444'; ctx.shadowBlur=7; ctx.fill(); ctx.shadowBlur=0}); requestAnimationFrame(loop)})();
+
+function addMsg(txt,isUser,img){
+let ch=document.getElementById('chat'); ch.classList.remove('hidden');
+let hero=document.getElementById('hero'); if(hero) hero.classList.add('hidden');
 let recentWrap=document.getElementById('recentWrap'); if(recentWrap) recentWrap.classList.add('hidden');
 let d=document.createElement('div');
 if(isUser){
-d.className='ml-auto max-w-[82%] bg-[#d32f2f] px-4 py-3 rounded-[20px] rounded-br-[6px] text-[14px] shadow'; 
-d.textContent=txt
+d.className='ml-auto max-w-[82%] bg-[#d32f2f] px-4 py-3 rounded-[20px] rounded-br-[6px] text-[14px]';
+d.textContent=txt;
 } else {
 d.className='mr-auto max-w-[86%] bg-white/[.08] border border-white/10 px-4 py-3 rounded-[20px] rounded-bl-[6px] text-[14px] leading-[20px]';
-if(img){
-d.innerHTML=`<img src="${img}" class="rounded-[14px] w-full mb-3"><div style="white-space:pre-wrap">${txt}</div><div class="mt-3 flex flex-wrap gap-2"><button onclick="window.open('${img}','_blank')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/10">Download 4K</button><button onclick="navigator.clipboard.writeText('${img}')" class="text-[11px] px-3 py-1.5 rounded-full bg-red-500/15 text-red-200">Copy</button></div>`
-} else {
 d.style.whiteSpace='pre-wrap';
-d.textContent=txt + (extra||'')
+if(img){
+d.innerHTML='<img src="'+img+'" class="rounded-[14px] w-full mb-3"><div style="white-space:pre-wrap">'+txt+'</div><div class="mt-3 flex gap-2"><button onclick="window.open(\''+img+'\',\'_blank\')" class="text-[11px] px-3 py-1.5 rounded-full bg-white/10">Download 4K</button><button onclick="navigator.clipboard.writeText(\''+img+'\')" class="text-[11px] px-3 py-1.5 rounded-full bg-red-500/15 text-red-200">Copy</button></div>';
+} else {
+d.textContent=txt;
 }
 }
-ch.appendChild(d); 
+ch.appendChild(d);
 ch.scrollIntoView({behavior:'smooth', block:'end'});
-let vib=m=>navigator.vibrate&&navigator.vibrate(m); vib(25);
+if(navigator.vibrate) navigator.vibrate(25);
 }
+
+function ask(txt){document.getElementById('inp').value=txt; send();}
 
 function send(){
 let inp=document.getElementById('inp'); let txt=inp.value.trim(); if(!txt) return; inp.value='';
-let hero=document.getElementById('hero'); if(hero) hero.classList.add('hidden');
-
-// AUTO MODE DETECT - Fix
-let isImage = /(image|art|photo|picture|draw|generate.*(img|pic)|moon|city|cyberpunk|neon)/i.test(txt);
-let isCode = /(code|function|html|css|js|python|write.*code)/i.test(txt);
-let isVideo = /(video|reel|clip|movie)/i.test(txt);
-
+let isImage = /(image|art|photo|picture|draw|moon|city|cyberpunk|neon)/i.test(txt);
 if(isImage){
 let url='https://image.pollinations.ai/prompt/'+encodeURIComponent(txt+' red moon cinematic ultra detailed 8k')+'?width=800&height=600&model=flux&seed='+Date.now();
-addMsg(txt,true); 
-setTimeout(()=>{
-addMsg(`🌕 Generated! 
-
-Flux • 4K • Eclipse active
-Prompt: ${txt}
-
-Tap Download to save`,false,url);
-let r=document.getElementById('recent'); 
+addMsg(txt,true);
+setTimeout(function(){
+addMsg('🌕 Generated!\n\nFlux • 4K • Eclipse active\nPrompt: '+txt+'\n\nTap Download to save',false,url);
+let r=document.getElementById('recent');
 if(r){
-let card=document.createElement('div'); 
-card.className='rounded-[14px] overflow-hidden bg-black border border-red-500/25'; 
-card.innerHTML=`<img src="${url}" class="aspect-[16/10] object-cover w-full"><div class="p-2 text-[11px] text-white/60">${txt.slice(0,18)} • now</div>`; 
-r.prepend(card)
+let card=document.createElement('div');
+card.className='rounded-[14px] overflow-hidden bg-black border border-red-500/25';
+card.innerHTML='<img src="'+url+'" class="aspect-[16/10] object-cover w-full"><div class="p-2 text-[11px] text-white/60">'+txt.slice(0,18)+' • now</div>';
+r.prepend(card);
 }
 },700);
-} else if(isCode){
-addMsg(txt,true); 
-setTimeout(()=>{
-addMsg(`💻 Code for: ${txt}
-
-function redMoon() {
-  console.log('🌕 ${txt}');
-  return 'Mass da!';
-}
-
-Copy pannu da!`,false);
-},500);
 } else {
-// NORMAL CHAT - No \n\n bug
-addMsg(txt,true); 
-setTimeout(()=>{
-addMsg(`🌕 Red Moon AI
-
-You said: ${txt}
-
-I can help with:
-• Chat - Anything
-• Image - Say "create image of..."
-• Code - Say "write code for..."
-• Video - Say "video prompt"
-• File upload, Camera, Location
-
-Try: "Generate art of red moon city"`,false);
+addMsg(txt,true);
+setTimeout(function(){
+addMsg('🌕 Red Moon AI\n\nYou said: '+txt+'\n\nI can help with:\n• Chat - Anything\n• Image - Say "create image of..."\n• Code - Say "write code"\n\nTry: "Generate art of red moon city"',false);
 },400);
 }
 }
+document.getElementById('inp').addEventListener('keydown',function(e){if(e.key==='Enter') send();});
+function holdStart(){if(navigator.vibrate) navigator.vibrate(15); setTimeout(function(){ask('Create image of red moon eclipse over cyberpunk city');},1000);}
+function holdEnd(){}
+</script>
+</body>
+</html>
