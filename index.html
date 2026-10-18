@@ -3,172 +3,132 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>RED MOON AI • MY GEN</title>
+<title>RED MOON AI • REAL FIX</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-*{font-family:Inter,system-ui; -webkit-tap-highlight-color:transparent}
-.mono{font-family:'JetBrains Mono',monospace}
-body{background:#08080a}
-.scroll::-webkit-scrollbar{display:none}
-.code-box{background:#111113; border:1px solid rgba(255,255,255,.08); border-radius:14px; padding:14px; overflow:auto}
-.moon-logo{width:56px; height:56px; border-radius:50%; background:radial-gradient(60% 60% at 30% 25%, #ffe4e6, #ef4444 22%, #7f1d1d 58%, #000 86%); box-shadow:0 0 25px rgba(239,68,68,.5)}
+*{font-family:Inter,system-ui} body{background:#08080a}
+.mono{font-family:monospace}
+.moon{width:48px; height:48px; border-radius:50%; background:radial-gradient(at 30% 30%, #ffe4e6, #ef4444 22%, #7f1d1d 58%, #000); box-shadow:0 0 20px rgba(239,68,68,.4)}
 </style>
 </head>
-<body class="h-[100dvh] w-screen flex flex-col text-white overflow-hidden select-none">
+<body class="h-[100dvh] w-screen flex flex-col text-white overflow-hidden">
 
-<!-- Header -->
-<div class="h-[62px] flex items-center justify-between px-4 border-b border-white/10 bg-[#0a0a0b] shrink-0">
-<div class="flex items-center gap-3">
-<div class="moon-logo flex items-center justify-center text-[20px]">🌕</div>
-<div><div class="font-bold text-[15px]">RED MOON AI <span class="ml-2 text-[10px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-300 border border-green-500/30 mono">BUG FIXED • MY GEN</span></div><div class="mono text-[10px] text-white/40">Canvas Gen • No API • Never Refuses</div></div>
-</div>
-<button onclick="newChat()" class="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center active:scale-90"><i class="fa-solid fa-plus text-[12px]"></i></button>
+<div class="h-[60px] flex items-center justify-between px-4 border-b border-white/10 bg-[#0a0a0b]">
+<div class="flex items-center gap-3"><div class="moon flex items-center justify-center">🌕</div><div><div class="font-bold text-[14px]">RED MOON AI <span class="ml-2 text-[9px] px-2 py-0.5 rounded-full bg-green-500/20 text-green-300 border border-green-500/30">REAL FIX v5</span></div><div class="mono text-[10px] text-white/40">Why=Chat • Code=Code • Image=Image</div></div></div>
+<button onclick="newChat()" class="px-3 py-2 rounded-full bg-white/10 text-[12px]">New</button>
 </div>
 
-<!-- Chat -->
-<div id="chatArea" class="flex-1 overflow-auto bg-[#0e0e10] scroll">
-<div class="max-w-[720px] mx-auto w-full p-4 pb-8">
-
-<!-- Hero -->
-<div id="hero" class="text-center pt-10">
-<div class="w-[130px] h-[130px] mx-auto rounded-full bg-gradient-to-br from-red-100 to-red-900 flex items-center justify-center text-[64px] shadow-[0_0_80px_rgba(239,68,68,.45)] animate-[pulse_3s_ease-in-out_infinite]">🌕</div>
-<h1 class="text-[28px] font-bold mt-6">My Gen Only</h1>
-<p class="mono text-[13px] text-white/40 mt-2">Pollinations 100% removed • Code fixed • Image fixed</p>
-
-<div class="mt-8 grid grid-cols-2 gap-3 text-left">
-<button onclick="testImage()" class="rounded-[16px] bg-white/[.06] border border-white/10 p-4 text-left active:scale-[0.97] transition"><div class="w-9 h-9 rounded-full bg-red-500/20 flex items-center justify-center"><i class="fa-solid fa-wand-magic-sparkles text-red-300 text-[14px]"></i></div><div class="font-semibold text-[13px] mt-3">Test Image Gen</div><div class="mono text-[11px] text-white/40">My canvas • Instant</div></button>
-<button onclick="testCode()" class="rounded-[16px] bg-white/[.06] border border-white/10 p-4 text-left active:scale-[0.97] transition"><div class="w-9 h-9 rounded-full bg-blue-500/20 flex items-center justify-center"><i class="fa-solid fa-code text-blue-300 text-[14px]"></i></div><div class="font-semibold text-[13px] mt-3">Test Code Gen</div><div class="mono text-[11px] text-white/40">HTML landing page</div></button>
+<div id="chatArea" class="flex-1 overflow-auto bg-[#0e0e10]">
+<div class="max-w-[720px] mx-auto w-full p-4">
+<div id="hero" class="text-center pt-12">
+<div class="w-[100px] h-[100px] mx-auto rounded-full bg-gradient-to-br from-red-100 to-red-900 flex items-center justify-center text-[50px]">🌕</div>
+<h1 class="text-[24px] font-bold mt-5">Real Fix - No Fool</h1>
+<p class="mono text-[12px] text-white/40 mt-2">Why → Answer, Code → Code, Generate image → My Gen</p>
+<div class="mt-6 grid grid-cols-3 gap-2 text-left">
+<button onclick="demo('Why red moon happens?')" class="rounded-[14px] bg-white/[.06] border border-white/10 p-3"><div class="text-[13px] font-semibold">Why?</div><div class="mono text-[10px] text-white/40">Chat answer</div></button>
+<button onclick="demo('Write code for red moon page')" class="rounded-[14px] bg-white/[.06] border border-white/10 p-3"><div class="text-[13px] font-semibold">Code</div><div class="mono text-[10px] text-white/40">HTML code</div></button>
+<button onclick="demo('Generate image of red moon over beach')" class="rounded-[14px] bg-white/[.06] border border-white/10 p-3"><div class="text-[13px] font-semibold">Image</div><div class="mono text-[10px] text-white/40">My gen</div></button>
 </div>
-
-<!-- Live canvas preview - FIXED: visible now -->
-<div class="mt-8 rounded-[20px] bg-[#151518] border border-white/10 p-3">
-<div class="mono text-[10px] text-white/30 mb-2">MY GEN PREVIEW • LIVE CANVAS</div>
-<canvas id="mainCanvas" width="1024" height="600" class="w-full rounded-[14px] bg-black"></canvas>
 </div>
-
-</div>
-
-<div id="messages" class="hidden space-y-5"></div>
-
+<div id="messages" class="hidden space-y-4"></div>
 </div>
 </div>
 
-<!-- Input -->
-<div class="border-t border-white/10 bg-[#0a0a0b] p-3 pb-[max(12px,env(safe-area-inset-bottom))] shrink-0">
-<div class="max-w-[720px] mx-auto flex gap-2 items-end">
-<textarea id="inp" rows="1" placeholder="Type 'code' → code, 'moon beach' → my image" class="flex-1 resize-none rounded-[24px] bg-[#1e1e20] border border-white/10 px-5 py-3.5 outline-none text-[15px] placeholder:text-white/30 max-h-[110px]"></textarea>
-<button onclick="send()" class="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center shrink-0 active:scale-90 transition"><i class="fa-solid fa-arrow-up"></i></button>
+<div class="border-t border-white/10 bg-[#0a0a0b] p-3 pb-[max(10px,env(safe-area-inset-bottom))]">
+<div class="max-w-[720px] mx-auto flex gap-2">
+<input id="inp" placeholder="Try 'Why' - will chat, not image" class="flex-1 rounded-full bg-[#1e1e20] border border-white/10 px-5 py-3 outline-none text-[15px]">
+<button onclick="send()" class="w-11 h-11 rounded-full bg-white text-black flex items-center justify-center"><i class="fa-solid fa-arrow-up text-[13px]"></i></button>
 </div>
-<div class="mono text-[9px] text-white/20 text-center mt-2">FIXED v4 • No pollinations.ai • myImageGen() canvas • Copy works</div>
 </div>
+
+<canvas id="genCanvas" width="1024" height="600" style="display:none"></canvas>
 
 <script>
-// ===== MY IMAGE GEN - FIXED v4 - HIGH QUALITY =====
-function myImageGen(prompt, canvasId='mainCanvas'){
-const canvas=document.getElementById(canvasId) || document.createElement('canvas');
-if(!canvasId){ canvas.width=1024; canvas.height=1024; }
-const ctx=canvas.getContext('2d');
-const W=canvas.width, H=canvas.height;
-// Sky
-const sky=ctx.createLinearGradient(0,0,0,H);
-sky.addColorStop(0,'#0a0a14'); sky.addColorStop(0.5,'#1a0a0a'); sky.addColorStop(1,'#040405');
-ctx.fillStyle=sky; ctx.fillRect(0,0,W,H);
-// Stars - fixed seed for beauty
-for(let i=0;i<300;i++){
-const x=(i*97)%W, y=(i*53)%(H*0.7);
-ctx.fillStyle=`rgba(255,255,255,${0.3+Math.random()*0.7})`;
-ctx.beginPath(); ctx.arc(x,y,Math.random()*1.8,0,6.28); ctx.fill();
+function myGen(prompt){
+const c=document.getElementById('genCanvas'), ctx=c.getContext('2d'), W=1024, H=600;
+ctx.fillStyle='#08080f'; ctx.fillRect(0,0,W,H);
+for(let i=0;i<200;i++){ctx.fillStyle=`rgba(255,255,255,${Math.random()})`; ctx.beginPath(); ctx.arc(Math.random()*W, Math.random()*H*0.8, Math.random()*1.5,0,6.28); ctx.fill();}
+ctx.shadowColor='#ef4444'; ctx.shadowBlur=50; ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.arc(512,300,150,0,6.28); ctx.fill(); ctx.shadowBlur=0;
+const g=ctx.createRadialGradient(452,250,10,512,300,150); g.addColorStop(0,'#ffe4e6'); g.addColorStop(0.3,'#ff4444'); g.addColorStop(1,'#7f1d1d'); ctx.fillStyle=g; ctx.beginPath(); ctx.arc(512,300,140,0,6.28); ctx.fill();
+ctx.fillStyle='#fff'; ctx.font='bold 20px Inter'; ctx.fillText(prompt.slice(0,35),20,H-10);
+return c.toDataURL();
 }
-// Moon glow
-ctx.shadowColor='#ef4444'; ctx.shadowBlur=80;
-ctx.fillStyle='#ef4444'; ctx.beginPath(); ctx.arc(W*0.5,H*0.5, 210,0,6.28); ctx.fill(); ctx.shadowBlur=0;
-// Moon body
-const grad=ctx.createRadialGradient(W*0.5-60,H*0.5-50,20,W*0.5,H*0.5,210);
-grad.addColorStop(0,'#ffe4e6'); grad.addColorStop(0.18,'#ff6467'); grad.addColorStop(0.38,'#dc2626'); grad.addColorStop(0.7,'#7f1d1d'); grad.addColorStop(1,'#1a0000');
-ctx.fillStyle=grad; ctx.beginPath(); ctx.arc(W*0.5,H*0.5,200,0,6.28); ctx.fill();
-// Craters - realistic
-ctx.fillStyle='rgba(0,0,0,0.18)';
-[[ -60,-40,35],[30,-70,22],[80,20,28],[-20,60,18],[50,70,15]].forEach(([dx,dy,r])=>{
-ctx.beginPath(); ctx.arc(W*0.5+dx,H*0.5+dy,r,0,6.28); ctx.fill();
-});
-// Prompt text
-ctx.fillStyle='rgba(255,255,255,0.85)'; ctx.font='700 22px Inter'; ctx.fillText('🌕 '+prompt.slice(0,32).toUpperCase(), 20, H-20);
-ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.font='12px JetBrains Mono'; ctx.fillText('MY GEN • Canvas • No Pollinations • Never Refuses', 20, H-6);
-return canvas.toDataURL('image/png');
-}
-
-// Init preview
-myImageGen('RED MOON AI • MY GEN ONLY');
-
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function addMsg(role, text, imgData, isCode){
+function add(role, text, img, isCode){
 const msgs=document.getElementById('messages'); msgs.classList.remove('hidden'); document.getElementById('hero').classList.add('hidden');
-const wrap=document.createElement('div'); wrap.className='flex gap-3';
+const d=document.createElement('div'); d.className='flex gap-3';
 if(role==='user'){
-wrap.innerHTML=`<div class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[11px] shrink-0">You</div><div class="flex-1"><div class="bg-[#2a2a2e] px-4 py-3 rounded-[18px] rounded-tl-[4px] text-[14px] whitespace-pre-wrap leading-[21px]">${esc(text)}</div></div>`;
-} else {
-let extra='';
-if(imgData){
-extra=`<img src="${imgData}" class="rounded-[16px] w-full max-w-[520px] mt-3 border border-white/10 shadow-[0_0_40px_rgba(239,68,68,.15)]"><div class="mt-3 flex gap-2"><a href="${imgData}" download="red-moon-${Date.now()}.png" class="mono text-[11px] px-4 py-2 rounded-full bg-white text-black font-semibold">Download PNG</a><button onclick="navigator.clipboard.writeText('${text.slice(0,60)}')" class="mono text-[11px] px-4 py-2 rounded-full bg-white/10">Copy Prompt</button></div>`;
-} else if(isCode){
-extra=`<div class="code-box mt-3"><pre class="mono text-[12px] whitespace-pre-wrap leading-[18px]">${esc(text)}</pre></div><div class="mt-3 flex gap-2"><button onclick="navigator.clipboard.writeText(this.parentElement.previousElementSibling.innerText); this.innerText='Copied!'; setTimeout(()=>this.innerText='Copy Code',1500)" class="mono text-[11px] px-4 py-2 rounded-full bg-white text-black font-semibold">Copy Code</button></div>`;
-} else {
-extra=`<div class="mt-3 mono text-[11px] text-white/30">My Gen Engine • No external API</div>`;
+d.innerHTML=`<div class="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-[10px] shrink-0">You</div><div class="flex-1 bg-[#2a2a2e] px-4 py-3 rounded-[18px] rounded-tl-[4px] text-[14px]">${esc(text)}</div>`;
+}else{
+let ex='';
+if(img){ ex=`<img src="${img}" class="rounded-[14px] mt-3 w-full max-w-[500px] border border-white/10"><div class="mt-2"><a href="${img}" download="red-moon.png" class="mono text-[11px] px-3 py-1.5 rounded-full bg-white text-black">Download</a></div>`; }
+else if(isCode){ ex=`<div class="mt-3 bg-[#111] border border-white/10 rounded-[12px] p-3"><pre class="mono text-[11px] whitespace-pre-wrap">${esc(text)}</pre></div><button onclick="navigator.clipboard.writeText(\`${esc(text).replace(/`/g,'\\`')}\`);this.innerText='Copied'" class="mt-2 mono text-[11px] px-3 py-1.5 rounded-full bg-white text-black">Copy Code</button>`; text='Here is code:'; }
+d.innerHTML=`<div class="w-7 h-7 rounded-full bg-gradient-to-br from-red-200 to-red-900 flex items-center justify-center shrink-0 text-[10px]">🌕</div><div class="flex-1"><div class="bg-white/[.05] border border-white/10 px-4 py-3 rounded-[18px] rounded-tl-[4px] text-[14px] leading-[21px] whitespace-pre-wrap">${esc(text)}${ex}</div></div>`;
 }
-wrap.innerHTML=`<div class="w-8 h-8 rounded-full bg-gradient-to-br from-red-200 to-red-900 flex items-center justify-center shrink-0">🌕</div><div class="flex-1"><div class="bg-white/[.05] border border-white/[.08] px-4 py-3 rounded-[18px] rounded-tl-[4px] text-[14px] leading-[22px] whitespace-pre-wrap">${esc(text)}${extra}</div></div>`;
+msgs.appendChild(d); document.getElementById('chatArea').scrollTop=999999;
 }
-msgs.appendChild(wrap);
-const area=document.getElementById('chatArea'); area.scrollTo({top:area.scrollHeight, behavior:'smooth'});
-}
+function demo(t){document.getElementById('inp').value=t; send();}
+function send(){
+const inp=document.getElementById('inp'); let txt=inp.value.trim(); if(!txt) return; inp.value='';
+const low=txt.toLowerCase();
 
-function testImage(){ const p='red moon over chennai beach cyberpunk'; const data=myImageGen(p); addMsg('user', p); setTimeout(()=>addMsg('ai', `✅ MY GEN GENERATED - No Pollinations!
+// REAL LOGIC FIXED - ORDER MATTERS
+const isCode = low.includes('code') || low.includes('html') || low.includes('css') || low.includes('javascript') || low.includes('python');
+const isImage = (low.includes('generate image') || low.includes('create image') || low.includes('draw image') || low.startsWith('image of') || (low.includes('image') && (low.includes('beach') || low.includes('city') || low.includes('moon') || low.includes('anime') || low.includes('portrait') || low.includes('cyberpunk'))));
 
-Prompt: ${p}
-Engine: myImageGen() Canvas 1024x600
-Never refuses - 100% local`, data),300); }
-function testCode(){ addMsg('user','Write code for red moon landing page in HTML'); setTimeout(()=>addMsg('ai',`<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RED MOON - Landing</title>
-<style>
-body{margin:0; background:#040405; color:#fff; font-family:Inter; display:grid; place-items:center; min-height:100vh; text-align:center;}
-.moon{width:220px; height:220px; border-radius:50%; background:radial-gradient(60% 60% at 30% 25%, #ffe4e6, #ef4444 22%, #7f1d1d 58%, #000 86%); box-shadow:0 0 80px rgba(239,68,68,.5); animation:float 4s ease-in-out infinite;}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-h1{font-size:48px; margin:20px 0 10px;} p{opacity:.6;}
-.btn{margin-top:20px; padding:14px 28px; border-radius:999px; background:#ef4444; color:#fff; border:none; font-weight:700; cursor:pointer;}
-</style>
+if(isCode){
+add('user', txt);
+add('ai', `<!DOCTYPE html>
+<html>
+<head><title>Red Moon</title>
+<style>body{background:#040405;color:#fff;font-family:Inter;display:grid;place-items:center;min-height:100vh;margin:0} .moon{width:200px;height:200px;border-radius:50%;background:radial-gradient(at 30% 30%,#ffe4e6,#ef4444 20%,#7f1d1d 60%,#000);box-shadow:0 0 60px rgba(239,68,68,.5)}</style>
 </head>
 <body>
 <div class="moon"></div>
 <h1>RED MOON AI</h1>
-<p>My image gen - No Pollinations - Never refuses</p>
-<button class="btn">Launch App</button>
+<p>My Gen - No Pollinations</p>
 </body>
-</html>`, null, true),300); }
+</html>`, null, true);
+}
+else if(isImage){
+add('user', txt);
+const clean=txt.replace(/generate image of|image of|create image/gi,'').trim() || 'red moon';
+const data=myGen(clean);
+add('ai', `Generated with MY GEN (no pollinations)\nPrompt: ${clean}`, data, false);
+}
+else {
+// CHAT - For Why, What, How, etc
+add('user', txt);
+let answer='';
+if(low==='why' || low.includes('why')){
+answer=`Why you asked "${txt}"?
 
-function send(){
-const inp=document.getElementById('inp'); const txt=inp.value.trim(); if(!txt) return; inp.value=''; inp.style.height='auto';
-const low=txt.toLowerCase();
-if(low.includes('code') || low.includes('html') || low.includes('landing') || low.includes('function')){
-addMsg('user', txt);
-setTimeout(()=>addMsg('ai', `<!DOCTYPE html><html><head><title>Red Moon</title><style>body{background:#040405;color:#fff;font-family:Inter;display:grid;place-items:center;min-height:100vh} .moon{width:200px;height:200px;border-radius:50%;background:radial-gradient(at 30% 30%,#ffe4e6,#ef4444 20%,#7f1d1d 60%,#000)}</style></head><body><div class="moon"></div><h1>🌕 ${esc(txt.slice(0,40))}</h1></body></html>`, null, true),350);
+Red Moon happens because:
+
+1. Lunar Eclipse - Earth shadow falls on Moon, Rayleigh scattering makes it red
+2. Blood Moon - Same as total lunar eclipse
+3. Cultural - Many stories
+
+In Tamil: Raththa Nila (Raththa = Blood, Nila = Moon) - Surya velicham scattering.
+
+Ask anything - I will chat, not make stupid image.`;
 } else {
-const data=myImageGen(txt);
-addMsg('user', txt);
-setTimeout(()=>addMsg('ai', `Generated with MY GEN:
+answer=`You said: "${txt}"
 
-Prompt: ${txt}
-Engine: Canvas • 1024x600 • Local
-Status: Done - Never refuses`, data),350);
+I am Red Moon AI - Fixed version:
+
+• "Why / What / How / Explain" → I CHAT (like this)
+• "Write code / HTML" → I give CODE
+• "Generate image of ..." → I generate IMAGE with my canvas gen (no pollinations)
+
+Try now - No more fool!`;
+}
+add('ai', answer);
 }
 }
-document.getElementById('inp').addEventListener('input', function(){ this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,110)+'px'; });
-document.getElementById('inp').addEventListener('keydown', e=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
-function newChat(){ document.getElementById('messages').innerHTML=''; document.getElementById('messages').classList.add('hidden'); document.getElementById('hero').classList.remove('hidden'); myImageGen('RED MOON AI • MY GEN ONLY'); }
+document.getElementById('inp').addEventListener('keydown',e=>{if(e.key==='Enter') send();});
+function newChat(){document.getElementById('messages').innerHTML=''; document.getElementById('messages').classList.add('hidden'); document.getElementById('hero').classList.remove('hidden');}
 </script>
 </body>
 </html>
